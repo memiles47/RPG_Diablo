@@ -29,13 +29,16 @@ public class EnemyFollow : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (!InRange())
+        if (!InRange() && !EnemyController.dead)
         {
             Chase();
         }
         else
         {
-            GetComponent<Animation>().CrossFade(idle.name);
+            if (!EnemyController.dead)
+            {
+                GetComponent<Animation>().CrossFade(idle.name);
+            }
         }
 	}
 

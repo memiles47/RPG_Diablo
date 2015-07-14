@@ -45,10 +45,12 @@ public class EnemyController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (health <= 0)
+        if (health <= 0 && !dead)
         {
             health = 0;
             opponentDead.OpponentDeath();
+            dead = true;
+            Destroy(gameObject, 4.0f);
         }
 	}
 
