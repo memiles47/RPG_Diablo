@@ -62,7 +62,6 @@ public class PlayerAttack : MonoBehaviour
                 return;
             }
 
-            
             if(!impacted)
             {
                 impacted = true;
