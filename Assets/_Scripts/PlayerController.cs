@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public AnimationClip run;
     public AnimationClip idle;
     public AnimationClip attack;
+    public AnimationClip death;
 
     // Declaration of public misc variables
     public int health;
@@ -41,6 +42,21 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if(IsDead())
+        {
 
+        }
 	}
+
+    public bool IsDead()
+    {
+        if(health <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

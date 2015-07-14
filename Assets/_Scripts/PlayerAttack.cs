@@ -10,7 +10,6 @@ public class PlayerAttack : MonoBehaviour
     private Animation playerAnimation;
     private TakeDamage takeDamage;
     private AnimationClip attack;
-    private float impactTime;
     private bool impacted;
 
     // Declaration of private misc variables
@@ -34,7 +33,6 @@ public class PlayerAttack : MonoBehaviour
         takeDamage = GameObject.FindGameObjectWithTag("CombatController").GetComponent<TakeDamage>();
         attackPlaying = false;
         rangeModifier = 5.0f;
-        impactTime = 0.36f;
         impacted = false;
     }
 
@@ -50,16 +48,22 @@ public class PlayerAttack : MonoBehaviour
 
     public void Attack()
     {
-        if (PlayerController.opponent != null && Vector3.Distance(playerTransform.position, 
-            PlayerController.opponent.transform.position) <= PlayerController.range * rangeModifier)
+        if (PlayerController.opponent != null && InRange(PlayerController.range * rangeModifier))
         {
-            
             playerTransform.LookAt(PlayerController.opponent.transform);
-            playerAnimation.CrossFade(attack.name);
-            attackPlaying = true;
 
-            if (!impacted && Vector3.Distance(playerTransform.position, PlayerController.opponent.transform.position) <=
-                PlayerController.range)
+            if (InRange(PlayerController.range))
+            {
+                playerAnimation.CrossFade(attack.name);
+                attackPlaying = true;
+            }
+            else
+            {
+                return;
+            }
+
+            
+            if(!impacted)
             {
                 impacted = true;
                 StartCoroutine("AnimationWait");
@@ -67,9 +71,21 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    IEnumerator AnimationWait()
+    public bool InRange(float range)
     {
-        yield return new WaitForSeconds(impactTime);
+        if(Vector3.Distance(playerController.transform.position, PlayerController.opponent.transform.position) <= range)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public IEnumerator AnimationWait()
+    {
+        yield return new WaitForSeconds(0.36f);
         takeDamage.EnemyHit(playerController.damage, 1);
     }
 }
