@@ -34,11 +34,17 @@ public class TakeDamage : MonoBehaviour
 
     public void PlayerHit(int damage, int damageModifier)
     {
-        playerController.health -= damage * damageModifier;
+        if (playerController.health > 0)
+        {
+            playerController.health -= damage * damageModifier;
+        }
     }
 
     public void EnemyHit(int damage, int damageModifier)
     {
-        PlayerController.opponent.GetComponent<EnemyController>().health -= damage * damageModifier;
+        if (PlayerController.opponent.GetComponent<EnemyController>().health > 0)
+        {
+            PlayerController.opponent.GetComponent<EnemyController>().health -= damage * damageModifier;
+        }
     }
 }

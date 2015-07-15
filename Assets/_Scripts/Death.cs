@@ -4,6 +4,7 @@ using System.Collections;
 public class Death : MonoBehaviour 
 {
     // Declaration of private reference variables
+    private PlayerController playerController;
     //private Animation opponentAnimation;
     private Animation playerAnimation;
     //private AnimationClip opponentDeath;
@@ -20,10 +21,10 @@ public class Death : MonoBehaviour
     // Use this for initialization of reference variables that do not change during game play
     void Awake()
     {
-        //opponentAnimation = PlayerController.opponent.GetComponent<Animation>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<Animation>();
-        //opponentDeath = PlayerController.opponent.GetComponent<EnemyController>().death;
-        playerDeath = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().death;
+        //playerDeath = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().death;
+        playerDeath = playerController.death;
     }
 
 	// Use this for initialization
@@ -40,11 +41,15 @@ public class Death : MonoBehaviour
 
     public void PlayerDeath()
     {
+        Debug.Log("Made it this far: Death PlayerDeath()");
         playerAnimation.Play(playerDeath.name);
+        playerController.dead = true;
     }
 
     public void OpponentDeath()
     {
         PlayerController.opponent.GetComponent<Animation>().Play(PlayerController.opponent.GetComponent<EnemyController>().death.name);
+        EnemyController.dead = true;
+        Destroy(PlayerController.opponent, 4.0f);
     }
 }

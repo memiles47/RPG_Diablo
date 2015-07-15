@@ -21,14 +21,14 @@ public class EnemyController : MonoBehaviour
     public float range;
 
     // Declaration of public static variables
-    public static float speed = 5.0f;
+    public static float speed;
     public static bool dead;
-    public static bool dying;
 
     // Awake is called when the script instance is being loaded
     public void Awake()
     {
         opponentDead = GameObject.FindGameObjectWithTag("CombatController").GetComponent<Death>();
+        speed = 5.0f;
         maxHealth = 100;
         health = maxHealth;
         damage = 25;
@@ -49,8 +49,6 @@ public class EnemyController : MonoBehaviour
         {
             health = 0;
             opponentDead.OpponentDeath();
-            dead = true;
-            Destroy(gameObject, 4.0f);
         }
 	}
 

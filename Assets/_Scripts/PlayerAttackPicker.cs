@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerAttackPicker : MonoBehaviour
 {
     // Declaration of private reference variables
+    private PlayerController playerController;
     private PlayerAttack playerAttack;
 
     // Declaration of private misc variables
@@ -18,13 +19,14 @@ public class PlayerAttackPicker : MonoBehaviour
     // Use this for initialization of reference variables that do not change during game play
     void Awake()
     {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerAttack = GameObject.FindGameObjectWithTag("CombatController").GetComponent<PlayerAttack>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        PickAttack();
+        if(!playerController.dead) PickAttack();
     }
 
     public void PickAttack()

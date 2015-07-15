@@ -29,7 +29,7 @@ public class ClickToMove : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (!PlayerAttack.attackPlaying)
+        if (!PlayerAttack.attackPlaying && !playerController.dead)
         {
             if (Input.GetMouseButton(0))
             {
@@ -68,6 +68,6 @@ public class ClickToMove : MonoBehaviour
     void MoveToClickedPosition()
     {
         // Using the character controller and simple move, move to the clicked position.
-        characterController.SimpleMove(transform.forward * PlayerController.speed);
+        characterController.SimpleMove(transform.forward * playerController.speed);
     }
 }
