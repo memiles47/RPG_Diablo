@@ -7,9 +7,9 @@ public class EnemyFollow : MonoBehaviour
     private CharacterController characterController;
     private PlayerController playerController;
     private Transform playerTransform;
-    private AnimationClip run;
-    //private AnimationClip idle;
-    private AnimationClip attack;
+    private AnimationClip enemyRun;
+    //private AnimationClip enemyIdle;
+    private AnimationClip enemyAttack;
     private Animation enemyAnimation;
     private EnemyController enemyController;
     private TakeDamage takeDamage;
@@ -33,15 +33,15 @@ public class EnemyFollow : MonoBehaviour
         enemyController = GetComponent<EnemyController>();
         takeDamage = GameObject.FindGameObjectWithTag("CombatController").GetComponent<TakeDamage>();
         enemyAnimation = GetComponent<Animation>();
-        run = enemyController.run;
-        //idle = enemyController.idle;
-        attack = enemyController.attack;
+        enemyRun = enemyController.enemyRun;
+        //enemyIdle = enemyController.idle;
+        enemyAttack = enemyController.enemyAttack;
     }
    
 	// Update is called once per frame
 	void Update ()
     {
-        if (!enemyAnimation.IsPlaying(attack.name))
+        if (!enemyAnimation.IsPlaying(enemyAttack.name))
         {
             attackPlaying = false;
             impacted = false;
@@ -82,14 +82,14 @@ public class EnemyFollow : MonoBehaviour
     {
         transform.LookAt(playerTransform.position);
         characterController.SimpleMove(transform.forward * EnemyController.speed);
-        GetComponent<Animation>().CrossFade(run.name);
+        GetComponent<Animation>().CrossFade(enemyRun.name);
     }
 
     private void Attack()
     {
         if (!playerController.dead)
         {
-            GetComponent<Animation>().CrossFade(attack.name);
+            GetComponent<Animation>().CrossFade(enemyAttack.name);
             attackPlaying = true;
         }
     }

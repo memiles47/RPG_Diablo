@@ -8,8 +8,8 @@ public class ClickToMove : MonoBehaviour
     private GameObject gameController;
     private Vector3 clickedPosition;
     private LocateMouse locateMouse;
-    private AnimationClip run;
-    private AnimationClip idle;
+    private AnimationClip playerRun;
+    private AnimationClip playerIdle;
     private PlayerController playerController;
 
     // Declaration of public reference variables
@@ -22,8 +22,8 @@ public class ClickToMove : MonoBehaviour
         clickedPosition = transform.position;
         locateMouse = gameController.GetComponent<LocateMouse>();
         playerController = GetComponent<PlayerController>();
-        run = playerController.run;
-        idle = playerController.idle;
+        playerRun = playerController.playerRun;
+        playerIdle = playerController.playerIdle;
     }
     
 	// Update is called once per frame
@@ -42,14 +42,14 @@ public class ClickToMove : MonoBehaviour
             if (Vector3.Distance(clickedPosition, transform.position) > 0.50f)
             {
                 MoveToClickedPosition(); // Move toward the clicked position
-                GetComponent<Animation>().CrossFade(run.name);
+                GetComponent<Animation>().CrossFade(playerRun.name);
             }
             // GameObject is not running
             else
             {
                 if (!playerController.dead)
                 {
-                	GetComponent<Animation>().CrossFade(idle.name);
+                	GetComponent<Animation>().CrossFade(playerIdle.name);
                 }
             }
         }

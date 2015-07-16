@@ -10,10 +10,10 @@ public class EnemyController : MonoBehaviour
     private int maxHealth;
 
     // Declaration of public reference variables
-    public AnimationClip run;
-    public AnimationClip idle;
-    public AnimationClip attack;
-    public AnimationClip death;
+    public AnimationClip enemyRun;
+    public AnimationClip enemyIdle;
+    public AnimationClip enemyAttack;
+    public AnimationClip enemyDeath;
 
     // Declaration of public misc variables
     public int health;
@@ -62,7 +62,7 @@ public class EnemyController : MonoBehaviour
     {
         if (PlayerController.opponent != null)
         {
-            GetComponent<Animation>().Play(GetComponent<EnemyController>().death.name);
+            GetComponent<Animation>().Play(GetComponent<EnemyController>().enemyDeath.name);
             GetComponent<EnemyController>().dead = true;
             Destroy(PlayerController.opponent, 4.0f);
         }

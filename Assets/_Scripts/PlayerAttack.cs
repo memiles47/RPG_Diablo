@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     private Transform playerTransform;
     private Animation playerAnimation;
     private TakeDamage takeDamage;
-    private AnimationClip attack;
+    private AnimationClip playerAttack;
     private bool impacted;
 
     // Declaration of private misc variables
@@ -29,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         playerTransform = player.GetComponent<Transform>();
         playerAnimation = player.GetComponent<Animation>();
-        attack = playerController.attack;
+        playerAttack = playerController.playerAttack;
         takeDamage = GameObject.FindGameObjectWithTag("CombatController").GetComponent<TakeDamage>();
         attackPlaying = false;
         rangeModifier = 5.0f;
@@ -39,7 +39,7 @@ public class PlayerAttack : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if(!playerAnimation.IsPlaying(attack.name))
+        if(!playerAnimation.IsPlaying(playerAttack.name))
         {
             attackPlaying = false;
             impacted = false;
@@ -54,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
 
             if (InRange(PlayerController.range))
             {
-                playerAnimation.CrossFade(attack.name);
+                playerAnimation.CrossFade(playerAttack.name);
                 attackPlaying = true;
             }
             else

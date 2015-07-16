@@ -9,10 +9,10 @@ public class PlayerController : MonoBehaviour
     private int maxHealth;
 
     // Declaration of public reference variables
-    public AnimationClip run;
-    public AnimationClip idle;
-    public AnimationClip attack;
-    public AnimationClip death;
+    public AnimationClip playerRun;
+    public AnimationClip playerIdle;
+    public AnimationClip playerAttack;
+    public AnimationClip playerDeath;
 
     // Declaration of public misc variables
     public int health;
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     private void Death()
     {
-        GetComponent<Animation>().Play(GetComponent<PlayerController>().death.name);
+        GetComponent<Animation>().Play(GetComponent<PlayerController>().playerDeath.name);
         GetComponent<PlayerController>().dead = true;
     }
 }
