@@ -72,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
 
     public bool InRange(float range)
     {
-        if(Vector3.Distance(playerController.transform.position, PlayerController.opponent.transform.position) <= range)
+        if (Vector3.Distance(playerController.transform.position, PlayerController.opponent.transform.position) <= range)
         {
             return true;
         }

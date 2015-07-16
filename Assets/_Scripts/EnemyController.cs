@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyController : MonoBehaviour
 {
     // Declaration of private reference variables
-    private Death opponentDead;
+    //private PlayerController playerController;
 
     // Declaration of private misc variables
     private int maxHealth;
@@ -22,12 +22,12 @@ public class EnemyController : MonoBehaviour
 
     // Declaration of public static variables
     public static float speed;
-    public static bool dead;
+    public bool dead;
 
     // Awake is called when the script instance is being loaded
     public void Awake()
     {
-        opponentDead = GameObject.FindGameObjectWithTag("CombatController").GetComponent<Death>();
+        //playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         speed = 5.0f;
         maxHealth = 100;
         health = maxHealth;
@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
         if (health <= 0 && !dead)
         {
             health = 0;
-            opponentDead.OpponentDeath();
+            Death();
         }
 	}
 
@@ -56,5 +56,19 @@ public class EnemyController : MonoBehaviour
     public void OnMouseOver()
     {
         PlayerController.opponent = gameObject;
+    }
+
+    private void Death()
+    {
+        if (PlayerController.opponent != null)
+        {
+            GetComponent<Animation>().Play(GetComponent<EnemyController>().death.name);
+            GetComponent<EnemyController>().dead = true;
+            Destroy(PlayerController.opponent, 4.0f);
+        }
+        else
+        {
+            return;
+        }
     }
 }

@@ -5,6 +5,7 @@ public class EnemyFollow : MonoBehaviour
 {
     // Declaration of private reference variables
     private CharacterController characterController;
+    private PlayerController playerController;
     private Transform playerTransform;
     private AnimationClip run;
     //private AnimationClip idle;
@@ -27,6 +28,7 @@ public class EnemyFollow : MonoBehaviour
     void Awake()
     {
         characterController =  GetComponent<CharacterController>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemyController = GetComponent<EnemyController>();
         takeDamage = GameObject.FindGameObjectWithTag("CombatController").GetComponent<TakeDamage>();
@@ -44,29 +46,27 @@ public class EnemyFollow : MonoBehaviour
             attackPlaying = false;
             impacted = false;
         }
-
-        if (!InRange() && !EnemyController.dead)
+        if(!InRange() && !GetComponent<EnemyController>().dead)
         {
             Chase();
         }
         else
         {
-            if (!EnemyController.dead)
+            if(!enemyController.dead)
             {
                 //GetComponent<Animation>().CrossFade(idle.name);
                 Attack();
             }
 
-            if (!impacted)
+            if (!impacted && !enemyController.dead)
             {
                 impacted = true;
                 StartCoroutine("AnimationWait");
             }
         }
-
 	}
 
-    bool InRange()
+    private bool InRange()
     {
         if (Vector3.Distance(transform.position, playerTransform.position) < enemyController.range)
         {
@@ -78,20 +78,23 @@ public class EnemyFollow : MonoBehaviour
         }
     }
 
-    void Chase()
+    private void Chase()
     {
         transform.LookAt(playerTransform.position);
         characterController.SimpleMove(transform.forward * EnemyController.speed);
         GetComponent<Animation>().CrossFade(run.name);
     }
 
-    void Attack()
+    private void Attack()
     {
-        GetComponent<Animation>().CrossFade(attack.name);
-        attackPlaying = true;
+        if (!playerController.dead)
+        {
+            GetComponent<Animation>().CrossFade(attack.name);
+            attackPlaying = true;
+        }
     }
 
-    public IEnumerator AnimationWait()
+    private IEnumerator AnimationWait()
     {
         yield return new WaitForSeconds(0.36f);
         takeDamage.PlayerHit(GetComponent<EnemyController>().damage, 1);

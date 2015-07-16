@@ -47,7 +47,10 @@ public class ClickToMove : MonoBehaviour
             // GameObject is not running
             else
             {
-                GetComponent<Animation>().CrossFade(idle.name);
+                if (!playerController.dead)
+                {
+                	GetComponent<Animation>().CrossFade(idle.name);
+                }
             }
         }
 	}

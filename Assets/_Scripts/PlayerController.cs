@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     // Declaration of private reference variables
-    private Death playerDead;
 
     // Declaration of private misc variables
     private int maxHealth;
@@ -18,19 +17,18 @@ public class PlayerController : MonoBehaviour
     // Declaration of public misc variables
     public int health;
     public int damage;
+    public float speed;
+    public bool dead;
 
     // Declaration of public static variables
-    public float speed;
     public static GameObject opponent;
     public static float range;
-    public bool dead;
 
     // Use this for initialization of reference variables that do not change during game play
     void Awake()
     {
-        playerDead = GameObject.FindGameObjectWithTag("CombatController").GetComponent<Death>();
         speed = 7.0f;
-        maxHealth = 500;
+        maxHealth = 100;
         health = maxHealth;
         damage = 50;
         range = 1.25f;
@@ -50,7 +48,14 @@ public class PlayerController : MonoBehaviour
         if(health <= 0 && !dead)
         {
             health = 0;
-            playerDead.PlayerDeath();
+            dead = true;
+            Death();
         }
 	}
+
+    private void Death()
+    {
+        GetComponent<Animation>().Play(GetComponent<PlayerController>().death.name);
+        GetComponent<PlayerController>().dead = true;
+    }
 }
