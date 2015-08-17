@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     private TakeDamage takeDamage;
     private AnimationClip playerAttack;
     private bool impacted;
+    private WaitForSeconds impactWait;
 
     // Declaration of private misc variables
     private float rangeModifier;
@@ -34,6 +35,7 @@ public class PlayerAttack : MonoBehaviour
         attackPlaying = false;
         rangeModifier = 5.0f;
         impacted = false;
+        impactWait = new WaitForSeconds(0.36f);
     }
 
 	// Update is called once per frame
@@ -84,7 +86,7 @@ public class PlayerAttack : MonoBehaviour
 
     public IEnumerator AnimationWait()
     {
-        yield return new WaitForSeconds(0.36f);
+        yield return impactWait;
         takeDamage.EnemyHit(playerController.damage, 1);
     }
 }

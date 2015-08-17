@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     // Declaration of private misc variables
     private int maxHealth;
 
+
     // Declaration of public reference variables
     public AnimationClip playerRun;
     public AnimationClip playerIdle;
@@ -18,11 +19,11 @@ public class PlayerController : MonoBehaviour
     public int health;
     public int damage;
     public float speed;
-    public bool dead;
 
     // Declaration of public static variables
     public static GameObject opponent;
     public static float range;
+    public static bool dead;
 
     // Use this for initialization of reference variables that do not change during game play
     void Awake()
@@ -56,6 +57,6 @@ public class PlayerController : MonoBehaviour
     private void Death()
     {
         GetComponent<Animation>().Play(GetComponent<PlayerController>().playerDeath.name);
-        GetComponent<PlayerController>().dead = true;
+        PlayerController.dead = true;
     }
 }

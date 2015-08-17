@@ -5,15 +5,14 @@ public class EnemyFollow : MonoBehaviour
 {
     // Declaration of private reference variables
     private CharacterController characterController;
-    private PlayerController playerController;
     private Transform playerTransform;
     private AnimationClip enemyRun;
-    //private AnimationClip enemyIdle;
     private AnimationClip enemyAttack;
     private Animation enemyAnimation;
     private EnemyController enemyController;
     private TakeDamage takeDamage;
     private bool impacted;
+    private WaitForSeconds impactWait;
 
     // Declaration of private misc variables
 
@@ -28,14 +27,13 @@ public class EnemyFollow : MonoBehaviour
     void Awake()
     {
         characterController =  GetComponent<CharacterController>();
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemyController = GetComponent<EnemyController>();
         takeDamage = GameObject.FindGameObjectWithTag("CombatController").GetComponent<TakeDamage>();
         enemyAnimation = GetComponent<Animation>();
         enemyRun = enemyController.enemyRun;
-        //enemyIdle = enemyController.idle;
         enemyAttack = enemyController.enemyAttack;
+        impactWait = new WaitForSeconds(0.36f);
     }
    
 	// Update is called once per frame
@@ -87,7 +85,7 @@ public class EnemyFollow : MonoBehaviour
 
     private void Attack()
     {
-        if (!playerController.dead)
+        if (!PlayerController.dead)
         {
             GetComponent<Animation>().CrossFade(enemyAttack.name);
             attackPlaying = true;
@@ -96,7 +94,7 @@ public class EnemyFollow : MonoBehaviour
 
     private IEnumerator AnimationWait()
     {
-        yield return new WaitForSeconds(0.36f);
+        yield return impactWait;
         takeDamage.PlayerHit(GetComponent<EnemyController>().damage, 1);
     }
 }

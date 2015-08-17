@@ -29,7 +29,7 @@ public class ClickToMove : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (!PlayerAttack.attackPlaying && !playerController.dead)
+        if (!PlayerAttack.attackPlaying && !PlayerController.dead)
         {
             if (Input.GetMouseButton(0))
             {
@@ -47,7 +47,7 @@ public class ClickToMove : MonoBehaviour
             // GameObject is not running
             else
             {
-                if (!playerController.dead)
+                if (!PlayerController.dead)
                 {
                 	GetComponent<Animation>().CrossFade(playerIdle.name);
                 }
